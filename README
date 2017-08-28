@@ -1,0 +1,1 @@
+LD_PRELOAD=$PWD/arg_inject.so ./a.out
