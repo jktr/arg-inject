@@ -1,3 +1,0 @@
-#!/bin/sh
-
-exec gcc -O2 -fPIC -shared -ldl -o arg_inject.{so,c}
