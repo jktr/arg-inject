@@ -1,1 +1,1 @@
-LD_PRELOAD=$PWD/arg_inject.so ./a.out
+LD_PRELOAD=$PWD/arg_inject.so ./arg_echo
