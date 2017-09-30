@@ -39,9 +39,10 @@ static int (*real_main) (int, char **, char **);
 static int
 inject (int argc, char **argv, char **env)
 {
+  // try in order: env, $1, default
   char *inject_path = getenv (ENV_INJECT_FILE);
-  if (inject_path == NULL)
-    inject_path = DEFAULT_INJECT_FILE;
+  if (!inject_path)
+    inject_path = (argc == 2 ? argv[1] : DEFAULT_INJECT_FILE);
 
   FILE *fp = fopen (inject_path, "r");
   if (!fp)
