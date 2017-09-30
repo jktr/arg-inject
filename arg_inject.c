@@ -52,9 +52,8 @@ inject (int argc, char **argv, char **env)
     }
 
   static arg_array inject;
-  init_arg_array (&inject);	//unsafe init of static member
-  if (argc > 0)
-    append_arg_array (&inject, argv[0]);
+  init_arg_array (&inject);	//unsafe init
+  append_arg_array (&inject, (argc > 0 ? argv[0] : ""));
 
   ssize_t nread;
   do
