@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define ENV_INJECT_FILE "INJECT_ARGS_FILE"
+#define ENV_INJECT_FILE "INJECTEE"
 #define DEFAULT_INJECT_FILE "./inject.conf"
 
 typedef struct
@@ -44,10 +44,10 @@ inject (int argc, char **argv, char **env)
     inject_path = DEFAULT_INJECT_FILE;
 
   FILE *fp = fopen (inject_path, "r");
-  if (fp == NULL)
+  if (!fp)
     {
       fprintf (stderr, "could't open arg inject file %s\n", inject_path);
-      exit (EXIT_FAILURE);
+      return EXIT_FAILURE;
     }
 
   static arg_array inject;
@@ -72,14 +72,14 @@ inject (int argc, char **argv, char **env)
 }
 
 int
-__libc_start_main (int (*main) (int, char * *, char * *),
-		   int argc, char * *ubp_av,
+__libc_start_main (int (*main) (int, char **, char **),
+		   int argc, char **ubp_av,
 		   void (*init) (void),
 		   void (*fini) (void),
 		   void (*rtld_fini) (void), void (*stack_end))
 {
-  int (*next) (int (*main) (int, char * *, char * *),
-	       int argc, char * *ubp_av,
+  int (*next) (int (*main) (int, char **, char **),
+	       int argc, char **ubp_av,
 	       void (*init) (void),
 	       void (*fini) (void),
 	       void (*rtld_fini) (void),
