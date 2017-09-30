@@ -62,7 +62,10 @@ inject (int argc, char **argv, char **env)
       size_t len = 0;
       nread = getline (&line, &len, fp);
       if (nread != -1)
-	append_arg_array (&inject, strtok (line, "\n"));	//leaks 1 byte at end
+	{
+	  char *param = strtok (line, "\n");	//leaks 1 byte at eol
+	  append_arg_array (&inject, (param ? param : ""));
+	}
     }
   while (nread != -1);
 
